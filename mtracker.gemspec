@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["info@muratayusuke.com"]
   spec.summary       = %q{Simple time tracker better than benchmark.}
   spec.description   = %q{Simple time tracker better than benchmark.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/muratayusuke/mtracker"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
