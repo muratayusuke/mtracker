@@ -1,6 +1,6 @@
 # Mtracker
 
-TODO: Write a gem description
+Simple time tracker.
 
 ## Installation
 
@@ -18,7 +18,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Just include `Mtracker` module to your class and call `track` method with label and block.
+
+```
+class Myclass
+  include Mtracker
+  
+  def foo
+    track 'sample job' do
+	  'bar' * 1000000
+    end
+  end
+end
+```
+
+Then you can see following output:
+
+```
+[start] sample job
+[end] sample job (0.004353018 sec)
+```
+
+That's all.
 
 ## Contributing
 
