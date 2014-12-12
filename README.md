@@ -37,8 +37,6 @@ Then you can see following output:
 ```
 [start] sample job
 [end] sample job (0.004353018 sec)
-
-
 ```
 
 ## Usage with logger
@@ -68,8 +66,6 @@ Then you can see following output in your logger output as info level:
 ```
 [start] sample job
 [end] sample job (0.004353018 sec)
-
-
 ```
 
 
