@@ -6,7 +6,7 @@ module Mtracker
     start_time = Time.now
     put_track_info "[start] #{label}"
     yield
-    put_track_info "[end] #{label} (#{Time.now - start_time} sec)"
+    put_track_info "[end] #{label} (#{sprintf('%10.3f', Time.now - start_time)} sec)"
   end
 
   def put_track_info(msg)
