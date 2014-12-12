@@ -23,10 +23,10 @@ Just include `Mtracker` module to your class and call `track` method with label 
 ```
 class Myclass
   include Mtracker
-  
+
   def foo
     track 'sample job' do
-	  'bar' * 1000000
+      'bar' * 1000000
     end
   end
 end
@@ -39,7 +39,36 @@ Then you can see following output:
 [end] sample job (0.004353018 sec)
 ```
 
-That's all.
+## Usage with logger
+Just include `Mtracker` module to your class and make attribute reader named logger and
+call `track` method with label and block.
+
+```
+class Myclass
+  include Mtracker
+
+  attr_accessor :logger
+
+  def initialize
+    # initialize logger
+  end
+
+  def foo
+    track 'sample job' do
+      'bar' * 1000000
+    end
+  end
+end
+```
+
+Then you can see following output in your logger output as info level:
+
+```
+[start] sample job
+[end] sample job (0.004353018 sec)
+```
+
+
 
 ## Contributing
 
