@@ -12,6 +12,8 @@ module Mtracker
   def put_track_info(msg)
     if respond_to?(:logger)
       logger.info(msg)
+    elsif Rails
+      Rails.logger.info(msg)
     else
       puts msg
     end
