@@ -5,8 +5,9 @@ module Mtracker
   def track(label)
     start_time = Time.now
     put_track_info "[start] #{label}"
-    yield
+    result = yield
     put_track_info "[end] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
+    result
   end
 
   def put_track_info(msg)

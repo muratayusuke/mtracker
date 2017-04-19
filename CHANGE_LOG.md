@@ -1,3 +1,6 @@
+= 0.2.1
+- return result of block
+
 = 0.2.0
 - support Rails.logger
 
