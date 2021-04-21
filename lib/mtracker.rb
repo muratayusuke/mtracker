@@ -3,10 +3,12 @@ require 'mtracker/version'
 # module for tracking time
 module Mtracker
   def track(label)
+    @mtracker_nest_level = @mtracker_nest_level ? @mtracker_nest_level + 1 : 0
     start_time = Time.now
-    put_track_info "[start] #{label}"
+    indent = '' * @mtracker_nest_level
+    put_track_info "#{indent}[start] #{label}"
     result = yield
-    put_track_info "[end] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
+    put_track_info "#{indent}[end] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
     result
   end
 
