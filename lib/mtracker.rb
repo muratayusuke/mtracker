@@ -2,7 +2,7 @@ require 'mtracker/version'
 
 # module for tracking time
 module Mtracker
-  attr_accessor :mtracker_log_pid_and_tid
+  attr_accessor :mtracker_log_pid_and_tid, :mtracker_slack_url
 
   def track(label, options)
     slack = options[:slack]
@@ -66,7 +66,9 @@ module Mtracker
   end
 
   def send_to_slack(msg)
-    uri = URI.parse(Mtracker.slack_url)
+    return unless mtracker_slack_url
+
+    uri = URI.parse(mtracker_slack_url)
     data = { text: msg }
     Net::HTTP.post_form(uri, payload: data.to_json)
   end
