@@ -4,7 +4,7 @@ require 'mtracker/version'
 module Mtracker
   attr_accessor :mtracker_log_pid_and_tid, :mtracker_slack_url
 
-  def track(label, options)
+  def track(label, options = {})
     slack = options[:slack]
 
     start_time = Time.now
