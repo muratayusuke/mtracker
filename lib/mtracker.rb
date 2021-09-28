@@ -4,13 +4,19 @@ require 'mtracker/version'
 module Mtracker
   attr_accessor :mtracker_log_pid_and_tid
 
-  def track(label)
+  def track(label, options)
+    slack = options[:slack]
+
     start_time = Time.now
     increment_nest_level
 
-    put_track_info "#{indent}[start#{pid_and_tid}] #{label}"
+    start_msg = "#{indent}[start#{pid_and_tid}] #{label}"
+    put_track_info start_msg, slack
+
     result = yield
-    put_track_info "#{indent}[end  #{pid_and_tid}] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
+
+    finish_msg = "#{indent}[end  #{pid_and_tid}] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
+    put_track_info finish_msg, slack
 
     decrement_nest_level
     result
@@ -47,7 +53,7 @@ module Mtracker
     @mtracker_nest_levels[nest_level_key] = @mtracker_nest_levels[nest_level_key] ? @mtracker_nest_levels[nest_level_key] - 1 : 0
   end
 
-  def put_track_info(msg)
+  def put_track_info(msg, slack = false)
     if respond_to?(:logger)
       logger.info(msg)
     elsif Rails
@@ -55,5 +61,13 @@ module Mtracker
     else
       puts msg
     end
+
+    send_to_slack(msg) if slack
+  end
+
+  def send_to_slack(msg)
+    uri = URI.parse(Mtracker.slack_url)
+    data = { text: msg }
+    Net::HTTP.post_form(uri, payload: data.to_json)
   end
 end
