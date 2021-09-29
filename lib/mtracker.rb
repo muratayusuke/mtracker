@@ -25,7 +25,7 @@ module Mtracker
   private
 
   def indent
-    '| ' * nest_level
+    '|   ' * nest_level
   end
 
   def pid_and_tid
