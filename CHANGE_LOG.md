@@ -1,3 +1,6 @@
+= 0.3.4
+- support newrelic
+
 = 0.2.1
 - return result of block
 
