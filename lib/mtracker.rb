@@ -5,18 +5,25 @@ module Mtracker
   attr_accessor :mtracker_log_pid_and_tid, :mtracker_slack_url
 
   def track(label, options = {})
-    slack = options[:slack]
+    slack = options[:slack] # Bool
+    newrelic = options[:newrelic] || false # Bool
+    nr_tracer = NewRelic::Agent::Tracer if defined?(NewRelic::Agent::Tracer) && newrelic
 
     start_time = Time.now
     increment_nest_level
 
     start_msg = "#{indent}[start#{pid_and_tid}] #{label}"
     put_track_info start_msg, slack
+    if nr_tracer
+      nr_segment = nr_tracer.start_segment(name: "Custom/#{label}", parent: nr_tracer.current_segment)
+      Thread.current[:nr_transaction]&.add_segment(nr_segment)
+    end
 
     result = yield
 
     finish_msg = "#{indent}[end  #{pid_and_tid}] #{label} (#{sprintf('%.3f', Time.now - start_time)} sec)"
     put_track_info finish_msg, slack
+    nr_segment&.finish
 
     decrement_nest_level
     result
